@@ -28,6 +28,10 @@ namespace OptivAppsec.CheckPassword
         private HIBPClientSettings settings;
         private HttpClient client;
 
+        /// <summary>
+        /// Creates HIBPClient object with the given settings. 
+        /// </summary>
+        /// <param name="settings">Settings, including required User-Agent value</param>
         public HIBPClient(HIBPClientSettings settings)
         {
             this.settings = settings;
@@ -54,6 +58,12 @@ namespace OptivAppsec.CheckPassword
 
         }
 
+        /// <summary>
+        /// Helper method to make sure the user's password is long enough. External
+        /// callers are free to make more restrictive tests.
+        /// </summary>
+        /// <param name="password">Password to check</param>
+        /// <returns>True if long enough, false otherwise</returns>
         private static bool CheckLength(string password)
         {
             return password.Length >= minLength;
@@ -146,6 +156,11 @@ namespace OptivAppsec.CheckPassword
             return true;
         }
 
+        /// <summary>
+        /// A helper method to make requests to the API. Handles retries and 429 Too Many Requests
+        /// </summary>
+        /// <param name="hashStart">First 5 hex characters from SHA-1 hash to test</param>
+        /// <returns>string with applications response</returns>
         private async Task<HttpResponseMessage> GetPasswordHashesAPI(string hashStart)
         {
             HttpResponseMessage response;
@@ -220,13 +235,8 @@ namespace OptivAppsec.CheckPassword
 
         public static string Sha1Hex(string message)
         {
-            return Sha1Hex(message, Encoding.UTF8);
-        }
-
-        public static string Sha1Hex(string message, Encoding encoding)
-        {
             SHA1 sha = new SHA1CryptoServiceProvider();
-            byte[] result = sha.ComputeHash(encoding.GetBytes(message));
+            byte[] result = sha.ComputeHash(Encoding.UTF8.GetBytes(message));
 
             StringBuilder hex = new StringBuilder(result.Length * 2);
             foreach (byte b in result)

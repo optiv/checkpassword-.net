@@ -18,7 +18,6 @@ namespace CheckPasswordUnitTests
             Assert.AreEqual(HIBPClient.Sha1Hex("ey5IDR3l5Lp75ocNRcQn"), "5EC59EFD9AD699D6130E07AD33DDAC2A1D04F4F8");
             Assert.AreEqual(HIBPClient.Sha1Hex("diugtVhokeQykrWe3ZUe"), "47DE7C93AB6BD5E80A3AFE37E57FF51E1A63D9C9");
 
-            Assert.AreEqual(HIBPClient.Sha1Hex("こんにちは", Encoding.UTF7), "7FE1D05E094B3694F830DA9339CF6D5CCB64A56E");
         }
 
         [TestMethod]
